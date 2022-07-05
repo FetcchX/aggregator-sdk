@@ -578,21 +578,21 @@ class WagPay {
 
 export default WagPay;
 
-// (async () => {
-// 	const wag = new WagPay();
+//  (async () => {
+//      const wag = new WagPay();
 // wag.getTxs("satyam")
 // 	.then((data) => console.log(data))
 // 	.catch((e) => console.log(e));
 // console.log(wag.getSupportedCoins(1));
 // console.log(wag.getSupportedCoins(ChainId.POL))
-// const route = await wag.getRoutes({
-// 	fromChain: ChainId.POL,
-// 	toChain: ChainId.ETH,
-// 	fromToken: CoinKey.USDC,
-// 	toToken: CoinKey.ETH,
-// 	amount: '100000000'
-// })
-// // console.log(route)
+//  const route = await wag.getRoutes({
+//  	fromChain: ChainId.POL,
+//  	toChain: ChainId.ETH,
+//  	fromToken: CoinKey.USDC,
+//  	toToken: CoinKey.ETH,
+//  	amount: '100000000'
+//  })
+//  console.log(route)
 // const token: Token = {
 // 	address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
 // 	chainId: 1,
@@ -605,4 +605,4 @@ export default WagPay;
 // signer = signer.connect(provider)
 
 // await wag.executeRoute(route[0], signer)
-// })();
+//  })();
