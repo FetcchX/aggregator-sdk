@@ -1,0 +1,1 @@
+export { _getRoutes } from "./api/routes";
