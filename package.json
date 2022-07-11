@@ -18,7 +18,7 @@
 		"start": "node -r module-alias/register ./dist --env=production",
 		"start:dev": "nodemon",
 		"publish:npm": "yarn build && npm publish",
-		"test": "ts-mocha"
+		"test": "ts-mocha --timeout 100000"
 	},
 	"nodemonConfig": {
 		"watch": [
