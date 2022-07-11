@@ -1,5 +1,7 @@
 import { ethers } from "ethers";
-import { Token } from "@wagpay/types";
+import { ChainId, Token, wagpayBridge } from "@wagpay/types";
+import { NATIVE_ADDRESS } from "../../../config";
+import { resolve } from "path";
 
 export interface ApproveERC20 {
 	amount: string;
@@ -8,12 +10,13 @@ export interface ApproveERC20 {
 
 export const _checkApprove = async (
 	token: Token,
-	spender: string,
+	chain: ChainId,
 	amount: string,
 	signer: ethers.Signer
 ): Promise<ApproveERC20> => {
 	const addres = await signer.getAddress();
-	console.log(addres, spender, "Dsa", token.address);
+
+	const spender = wagpayBridge[Number(chain)]
 
 	const abi = [
 		"function allowance(address owner, address spender) public view returns (uint256)",
@@ -47,11 +50,13 @@ export const _checkApprove = async (
 
 export const _approve = async (
 	token: Token,
-	spender: string,
+	chain: ChainId,
 	amount: string,
 	signer: ethers.Signer
 ): Promise<boolean> => {
 	return new Promise(async (resolve, reject) => {
+		const spender = wagpayBridge[Number(chain)]
+
 		const ERC20abi = [
 			"function approve(address _spender, uint256 _value) public returns (bool success)",
 		];
@@ -67,3 +72,38 @@ export const _approve = async (
 		}
 	});
 };
+
+export const checkAndGetApproval = async (
+	token: Token,
+	chain: ChainId,
+	amount: string,
+	signer: ethers.Signer
+): Promise<boolean> => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			if (
+				token.address.toLowerCase() !==
+				NATIVE_ADDRESS.toLowerCase()
+			) {
+				const needed = await _checkApprove(
+					token,
+					chain as ChainId,
+					amount.toString(),
+					signer
+				);
+				// console.log(needed)
+				if (needed.required) {
+					await _approve(
+						token,
+						chain as ChainId,
+						needed.amount,
+						signer
+					);
+				}
+			}
+			resolve(true)
+		} catch (e) {
+			resolve(false)
+		}
+	})
+}
