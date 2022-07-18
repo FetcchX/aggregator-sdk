@@ -1,6 +1,6 @@
 {
 	"name": "@wagpay/sdk",
-	"version": "0.0.18-6",
+	"version": "0.0.18-7",
 	"description": "Cross Chain Asset Transfer",
 	"keywords": [
 		"cross-chain",
