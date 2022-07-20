@@ -1,9 +1,6 @@
-import { config as configg } from 'dotenv'
-configg()
-
 type node_env = "prod" | "staging" | "dev"
 
-const env: node_env = process.env.NODE_ENV as node_env
+const env: node_env = "prod"
 
 const backend_urls: { [key: string]: string } = {
 	'dev': 'http://localhost:5000',

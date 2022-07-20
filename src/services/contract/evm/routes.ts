@@ -36,6 +36,7 @@ export const _constructExtraParams = (route: Routes) => {
 }
 
 export const _executeRoute = (
+	receiver: string,
 	route: Routes,
 	signer: ethers.Signer
 ): Promise<ReturnData | Error> => {
@@ -66,7 +67,7 @@ export const _executeRoute = (
 
 			const params = _constructExtraParams(route)
 			const routeDataArr = [
-				address,
+				receiver,
 				BigNumber.from(config.wagpayBridgeId[route.name]),
 				BigNumber.from(Number(route.route.toChain)),
 				route.route.fromToken.address,

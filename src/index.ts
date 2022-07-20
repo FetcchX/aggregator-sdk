@@ -82,10 +82,11 @@ class WagPay {
 	};
 
 	executeRoute = (
+		receiver: string,
 		route: Routes,
 		signer: ethers.Signer
 	): Promise<ReturnData | Error> => {
-		return _executeRoute(route, signer)
+		return _executeRoute(receiver, route, signer)
 	};
 
 	getTxs = (address: string, params?: string[]) => {
