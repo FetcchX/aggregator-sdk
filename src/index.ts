@@ -237,34 +237,34 @@ class WagPay {
 	};
 }
 
-// export default WagPay;
+export default WagPay;
 
-(async () => {
-	const wag = new WagPay();
-	// 	wag.getTxs("satyam")
-	// 	.then((data) => console.log(data))
-	// 	.catch((e) => console.log(e));
-	// console.log(wag.getSupportedCoins(1));
-	// console.log(wag.getSupportedCoins(ChainId.POL))
-	const route = await wag.getRoutes({
-		fromChain: ChainId.POL,
-		toChain: ChainId.ETH,
-		fromToken: CoinKey.MATIC,
-		toToken: CoinKey.USDC,
-		amount: ethers.utils.parseEther('100').toString()
-	})
-	console.log(route)
-	// const token: Token = {
-	// 	address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-	// 	chainId: 1,
-	// 	name: CoinKey.USDC,
-	// 	decimals: 6
-	// }
-	console.log(route[1])
-	const provider = new ethers.providers.JsonRpcProvider('https://polygon-mumbai.g.alchemy.com/v2/oD--2OO92oeHck5VCVI4hKEnYNCQ8F1d')
-	let signer = new ethers.Wallet('0deeb28bb0125df571c3817760ded64965ed18374ac8e9b3637ebc3c4401fa3d', provider)
-	signer = signer.connect(provider)
+// (async () => {
+// 	const wag = new WagPay();
+// 	// 	wag.getTxs("satyam")
+// 	// 	.then((data) => console.log(data))
+// 	// 	.catch((e) => console.log(e));
+// 	// console.log(wag.getSupportedCoins(1));
+// 	// console.log(wag.getSupportedCoins(ChainId.POL))
+// 	const route = await wag.getRoutes({
+// 		fromChain: ChainId.POL,
+// 		toChain: ChainId.ETH,
+// 		fromToken: CoinKey.MATIC,
+// 		toToken: CoinKey.USDC,
+// 		amount: ethers.utils.parseEther('100').toString()
+// 	})
+// 	console.log(route)
+// 	// const token: Token = {
+// 	// 	address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+// 	// 	chainId: 1,
+// 	// 	name: CoinKey.USDC,
+// 	// 	decimals: 6
+// 	// }
+// 	console.log(route[1])
+// 	const provider = new ethers.providers.JsonRpcProvider('https://polygon-mumbai.g.alchemy.com/v2/oD--2OO92oeHck5VCVI4hKEnYNCQ8F1d')
+// 	let signer = new ethers.Wallet('0deeb28bb0125df571c3817760ded64965ed18374ac8e9b3637ebc3c4401fa3d', provider)
+// 	signer = signer.connect(provider)
 
-	const data = await wag.executeRoute(signer.address, route[1], signer)
-	console.log(data)
-})();
+// 	const data = await wag.executeRoute(signer.address, route[1], signer)
+// 	console.log(data)
+// })();
