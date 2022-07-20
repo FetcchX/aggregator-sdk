@@ -10,26 +10,48 @@ export const _constructExtraParams = (route: Routes) => {
 	let params = ''
 
 	const abiEncoder = ethers.utils.defaultAbiCoder;
-	if (route.name === "HYPHEN") {
+
+	if (route.name.toUpperCase() === "HYPHEN") {
 		params = "";
-	} else if (route.name === "HOP") {
-		params = abiEncoder.encode(
-			["address bridgeAddress"],
-			[
-				route.uniswapData
-					? hopAddresses[route.route.fromChain][
-					route.uniswapData.fromToken.name
-					]
-					: hopAddresses[route.route.fromChain][
-					route.route.fromToken.name
-					],
-			]
-		);
-	} else if (route.name === "CELER") {
+	} else if (route.name.toUpperCase() === "HOP") {
+		if (route.route.fromChain === 'ETH') {
+			params = abiEncoder.encode(
+				["address bridgeAddress"],
+				[
+					route.uniswapData
+						? hopAddresses[route.route.fromChain][
+						route.uniswapData.fromToken.name
+						]
+						: hopAddresses[route.route.fromChain][
+						route.route.fromToken.name
+						],
+				]
+			);
+		} else {
+			params = abiEncoder.encode(
+				["address bridgeAddress", "uint bonderFee"],
+				[
+					route.uniswapData
+						? hopAddresses[route.route.fromChain][
+						route.uniswapData.fromToken.name
+						]
+						: hopAddresses[route.route.fromChain][
+						route.route.fromToken.name
+						],
+					route.extraData.bonderFee
+				]
+			);
+		}
+	} else if (route.name.toUpperCase() === "CELER") {
 		params = abiEncoder.encode(
 			["uint64 nonce", "uint32 maxSlippage"],
-			[new Date().getTime(), 3000]
+			[route.extraData.nonce, route.extraData.slippage]
 		);
+	} else if (route.name.toUpperCase() === 'ACROSS') {
+		params = abiEncoder.encode(
+			["uint64 relayerfeePct", "uint32 quoteTimestamp"],
+			[route.extraData.relayerFees, route.extraData.quoteTimestamp]
+		)
 	}
 
 	return params ? params : route.route.fromToken.address
