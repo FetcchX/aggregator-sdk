@@ -14,16 +14,16 @@ export const _constructExtraParams = (route: Routes) => {
 	if (route.name.toUpperCase() === "HYPHEN") {
 		params = "";
 	} else if (route.name.toUpperCase() === "HOP") {
-		if (route.route.fromChain === 'ETH') {
+		if (route.route.fromChain === '1') {
 			params = abiEncoder.encode(
 				["address bridgeAddress"],
 				[
 					route.uniswapData
 						? hopAddresses[route.route.fromChain][
-						route.uniswapData.fromToken.name
+						route.uniswapData.fromToken.chainAgnositcId
 						]
 						: hopAddresses[route.route.fromChain][
-						route.route.fromToken.name
+						route.route.fromToken.chainAgnositcId
 						],
 				]
 			);
@@ -33,10 +33,10 @@ export const _constructExtraParams = (route: Routes) => {
 				[
 					route.uniswapData
 						? hopAddresses[route.route.fromChain][
-						route.uniswapData.fromToken.name
+						route.uniswapData.fromToken.chainAgnositcId
 						]
 						: hopAddresses[route.route.fromChain][
-						route.route.fromToken.name
+						route.route.fromToken.chainAgnositcId
 						],
 					route.extraData.bonderFee
 				]
@@ -53,7 +53,6 @@ export const _constructExtraParams = (route: Routes) => {
 			[route.extraData.relayerFees, route.extraData.quoteTimestamp]
 		)
 	}
-
 	return params ? params : route.route.fromToken.address
 }
 
@@ -115,7 +114,6 @@ export const _executeRoute = (
 				],
 			];
 
-			console.log(config.rpc_urls[route.route.fromChain])
 			const connection = new ethers.providers.JsonRpcProvider(
 				config.rpc_urls[route.route.fromChain]
 			);
