@@ -3,7 +3,7 @@ import axios from "axios";
 
 const BASE_GRAPHQL_URL = "https://wagpay.club/watcher/graphql"
 
-export const _get_pending_tx = async (params: string[], address: string) => {
+export const get_pending_tx = async (params: string[], address: string) => {
 	return new Promise(async (resolve, reject) => {
 		const endpoint = BASE_GRAPHQL_URL;
 		const headers = {
@@ -37,7 +37,7 @@ export const _get_pending_tx = async (params: string[], address: string) => {
 	});
 };
 
-export const _store_pending_tx = async (tx: Tx, params: string[]) => {
+export const store_pending_tx = async (tx: Tx, params: string[]) => {
 	return new Promise(async (resolve, reject) => {
 		const endpoint = BASE_GRAPHQL_URL;
 		const headers = {

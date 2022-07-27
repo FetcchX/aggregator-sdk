@@ -1,1 +1,2 @@
-export { _getRoutes } from "./api/routes";
+export * from "./api"
+export * from "./contract"

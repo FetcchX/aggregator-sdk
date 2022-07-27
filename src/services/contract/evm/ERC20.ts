@@ -8,7 +8,7 @@ export interface ApproveERC20 {
 	required: boolean;
 }
 
-export const _checkApprove = async (
+export const checkApprove = async (
 	token: Token,
 	chain: ChainId,
 	amount: string,
@@ -48,7 +48,7 @@ export const _checkApprove = async (
 	}
 };
 
-export const _approve = async (
+export const approve = async (
 	token: Token,
 	chain: ChainId,
 	amount: string,
@@ -85,7 +85,7 @@ export const checkAndGetApproval = async (
 				token.address.toLowerCase() !==
 				NATIVE_ADDRESS.toLowerCase()
 			) {
-				const needed = await _checkApprove(
+				const needed = await checkApprove(
 					token,
 					chain as ChainId,
 					amount.toString(),
@@ -93,7 +93,7 @@ export const checkAndGetApproval = async (
 				);
 				// console.log(needed)
 				if (needed.required) {
-					await _approve(
+					await approve(
 						token,
 						chain as ChainId,
 						needed.amount,
