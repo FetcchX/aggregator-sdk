@@ -2,11 +2,11 @@ import { ChainId, hopAddresses, Routes, wagpayBridge } from "@wagpay/types";
 import { BigNumber, ethers } from "ethers";
 import { config } from "../../../config";
 import abi from "../../../interface/abi.json"
-import { checkAndGetApproval, _approve, _checkApprove } from "./ERC20";
+import { checkAndGetApproval, approve, checkApprove } from "./ERC20";
 import { NATIVE_ADDRESS } from "../../../config";
 import { ReturnData } from "../../../types";
 
-export const _constructExtraParams = (route: Routes) => {
+export const constructExtraParams = (route: Routes) => {
 	let params = ''
 
 	const abiEncoder = ethers.utils.defaultAbiCoder;
@@ -56,7 +56,7 @@ export const _constructExtraParams = (route: Routes) => {
 	return params ? params : route.route.fromToken.address
 }
 
-export const _executeRoute = (
+export const executeRoute = (
 	receiver: string,
 	route: Routes,
 	signer: ethers.Signer
@@ -86,7 +86,7 @@ export const _executeRoute = (
 				signer
 			);
 
-			const params = _constructExtraParams(route)
+			const params = constructExtraParams(route)
 			const routeDataArr = [
 				receiver,
 				BigNumber.from(config.wagpayBridgeId[route.name]),

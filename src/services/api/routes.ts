@@ -1,7 +1,7 @@
 import axios from "axios";
 import { CoinKey, tokens, RouteData, Routes } from "@wagpay/types";
 
-export const _getRoutes = async (route: RouteData): Promise<Routes[]> => {
+export const getRoutes = async (route: RouteData): Promise<Routes[]> => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			console.log(route.fromChain, route.fromToken);

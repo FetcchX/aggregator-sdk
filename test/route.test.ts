@@ -1,16 +1,10 @@
 import { ChainId, CoinKey, RouteData, Routes } from "@wagpay/types"
 import { assert, expect } from "chai"
 import { ethers } from "ethers"
-import WagPay from "../src"
+import { getRoutes, executeRoute } from "../src"
 import { ReturnData } from "../src/types"
 
 describe("Routes", () => {
-	let wagpay: WagPay
-
-	beforeEach(() => {
-		wagpay = new WagPay()
-	})
-
 	it("fetches available routes between ETH(ETH) -> USDC(POL)", async () => {
 		const routeInfo: RouteData = {
 			fromChain: ChainId.ETH,
@@ -20,7 +14,7 @@ describe("Routes", () => {
 			amount: ethers.utils.parseEther('1').toString()
 		}
 
-		const routes = await wagpay.getRoutes(routeInfo)
+		const routes = await getRoutes(routeInfo)
 		console.log(routes[0])
 
 		expect(typeof (routes)).to.eq('object')
@@ -42,7 +36,7 @@ describe("Routes", () => {
 		signer = signer.connect(provider)
 		console.log(signer.address)
 		try {
-			const data = await wagpay.executeRoute(signer.address, route, signer) as ReturnData
+			const data = await executeRoute(signer.address, route, signer) as ReturnData
 			expect(data.fromChain).to.eq(route.route.fromChain)
 			expect(data.toChain).to.eq(route.route.toChain)
 			expect(data.fromToken.address).to.eq(route.route.fromToken.address)
