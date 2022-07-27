@@ -31,73 +31,23 @@ describe("Routes", () => {
 	})
 
 	it("fetches and executes a bridge", async () => {
-
-
 		const route: Routes = {
-			name: 'Hop',
-			bridgeTime: '',
-			contractAddress: '',
-			amountToGet: '1143.645722',
-			transferFee: '0.0',
-			uniswapData: {
-				dex: '0x7cBBc355A50e19A58C2D8C24Be46Eef03093EDf7',
-				fees: 3.44109,
-				chainId: 1,
-				fromToken: {
-					name: 'Ethereum',
-					symbol: 'ETH',
-					address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-					chainAgnositcId: CoinKey.ETH,
-					decimals: 18,
-					chainId: 1
-				},
-				toToken: {
-					name: 'USD Coin',
-					symbol: 'USDC',
-					address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-					chainAgnositcId: CoinKey.USDC,
-					decimals: 6,
-					chainId: 1
-				},
-				amountToGet: 1143.58891
-			},
-			route: {
-				fromChain: '1',
-				toChain: '137',
-				fromToken: {
-					name: 'Ethereum',
-					symbol: 'ETH',
-					address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-					chainAgnositcId: CoinKey.ETH,
-					decimals: 18,
-					chainId: 1
-				},
-				toToken: {
-					name: 'USD Coin',
-					symbol: 'USDC',
-					address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
-					chainAgnositcId: CoinKey.USDC,
-					decimals: 6,
-					chainId: 137
-				},
-				amount: '10000000'
-			}
+			"name": "Hop", "logoUri": "https://raw.githubusercontent.com/chann44/assets-database/main/wagpay/bridge-images/hyphen.png", "bridgeTime": "2", "contractAddress": "0x8F255067135192B7C226821011271F26e627904a", "amountToGet": "15969.546089", "transferFee": "7.183156", "uniswapData": { "dex": "Uniswap", "fees": 48.0318, "chainId": 1, "fromToken": { "name": "Ethereum", "symbol": "ETH", "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "chainAgnositcId": CoinKey.ETH, "decimals": 18, "chainId": 1 }, "toToken": { "name": "Tether USD", "symbol": "USDT", "address": "0xdac17f958d2ee523a2206206994597c13d831ec7", "chainAgnositcId": CoinKey.USDT, "decimals": 6, "chainId": 1 }, "amountToGet": 15962.568199999998 }, "extraData": {
+				"bonderFee": "0"
+			}, "route": { "fromChain": "1", "toChain": "137", "fromToken": { "name": "Ethereum", "symbol": "ETH", "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "chainAgnositcId": CoinKey.ETH, "decimals": 18, "chainId": 1 }, "toToken": { "name": "Tether USD", "symbol": "USDT", "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", "chainAgnositcId": CoinKey.USDT, "decimals": 6, "chainId": 137 }, "amount": "10000000000000000000" }
 		}
 
 		const provider = new ethers.providers.JsonRpcProvider('https://polygon-mumbai.g.alchemy.com/v2/oD--2OO92oeHck5VCVI4hKEnYNCQ8F1d')
 		let signer = new ethers.Wallet('0deeb28bb0125df571c3817760ded64965ed18374ac8e9b3637ebc3c4401fa3d', provider)
 		signer = signer.connect(provider)
-
+		console.log(signer.address)
 		try {
-			const data = await wagpay.executeRoute(route, signer) as ReturnData
+			const data = await wagpay.executeRoute(signer.address, route, signer) as ReturnData
 			expect(data.fromChain).to.eq(route.route.fromChain)
 			expect(data.toChain).to.eq(route.route.toChain)
 			expect(data.fromToken.address).to.eq(route.route.fromToken.address)
 			expect(data.amount).to.eq(route.route.amount)
 			expect(data.bridge).to.eq(route.name)
-		} catch (e) {
-			console.log(e)
-			assert.fail('Transaction failed')
-		}
+		} catch (e) { console.log(e); assert.fail('Transaction Unsuccessful') }
 	})
 })
