@@ -1,2 +1,2 @@
-export { get_pending_tx } from "./pending_tx"
+export { getPendingTx } from "./pending_tx"
 export * from "./routes"

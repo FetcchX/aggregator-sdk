@@ -1,6 +1,7 @@
 export * from "./config"
 export * from "./services"
 export * from "./types"
+export * from './utils'
 
 // class WagPay {
 // 	NATIVE_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
