@@ -147,4 +147,52 @@ export const executeRoute = (
 			reject(e);
 		}
 	});
-} 
+}
+
+export const getTxData = (receiver: string, route: Routes) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			const bridgeAddress =
+				wagpayBridge[Number(route.route.fromChain)];
+
+			const contract = new ethers.utils.Interface(abi);
+
+			const params = constructExtraParams(route)
+			const routeDataArr = [
+				receiver,
+				BigNumber.from(config.wagpayBridgeId[route.name]),
+				BigNumber.from(Number(route.route.toChain)),
+				route.route.fromToken.address,
+				BigNumber.from(route.route.amount),
+				params,
+				route.uniswapData ? true : false,
+				[
+					route.uniswapData.dex,
+					BigNumber.from(route.route.amount),
+					BigNumber.from(
+						ethers.utils
+							.parseUnits(
+								route.uniswapData.amountToGet.toFixed(2),
+								route.uniswapData.toToken.decimals
+							)
+							.toString()
+					),
+					BigNumber.from(Number(3000)),
+					BigNumber.from(Number(route.uniswapData.chainId)),
+					route.uniswapData.fromToken.address,
+					route.uniswapData.toToken.address,
+					bridgeAddress,
+				],
+			];
+
+			console.log(routeDataArr)
+
+			const transaction = await contract.encodeFunctionData('transfer', [routeDataArr]);
+
+			resolve(transaction)
+		} catch (e) {
+			console.log(e);
+			reject(e);
+		}
+	});
+}
